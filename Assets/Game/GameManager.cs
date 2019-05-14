@@ -96,6 +96,13 @@ public class GameManager : MonoBehaviour
                 score++;
             }
         }
+        foreach (PlayerSetup setup in playerSetups)
+        {
+            if (setup.spaceShip == null || setup.spaceShip.Owner == id)
+                continue;
+            score += setup.spaceShip.HitCount;
+        }
+
         return score;
     }
 

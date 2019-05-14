@@ -16,6 +16,8 @@ public class SpaceShip : MonoBehaviour
     public float Energy { get { return _energy; } }
     public float MineEnergyCost { get { return _mineEnergyCost; } }
     public float ShootEnergyCost { get { return _shootEnergyCost; } }
+    public int HitCount { get { return _hitCount; } }
+
 
     // Gameplay
     public Color color;
@@ -27,6 +29,7 @@ public class SpaceShip : MonoBehaviour
     private const float _hitDuration = 3.0f;
     private float _hitSpeedFactor = 0.3f;
     private float _hitCountdown = 0.0f;
+    private int _hitCount = 0;
 
     private float _energy = 1.0f;
     private float _mineEnergyCost = 0.4f;
@@ -195,6 +198,11 @@ public class SpaceShip : MonoBehaviour
 
     private void Hit()
     {
+        if (!IsHit())
+        {
+            _hitCount++;
+        }
+
         _hitCountdown = _hitDuration;
         _meshRenderer.materials = new Material[2] { _meshRenderer.materials[0], hitMaterial };
     }
