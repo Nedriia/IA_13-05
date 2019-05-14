@@ -7,15 +7,15 @@ namespace FGAE
 {
     public class Search_Points : FGAE_CharacterStateBase
     {
-        public bool avoidance;
 
         public int count;
         public bool targetConfirmed;
         public WayPoint target;
         public float targetOrient;
-        //public Collider2D avoiding_rock;
         public bool avoiding;
         public Vector3 avoinding_pos;
+        public float dist_avoiding_max;
+        public float dist_avoiding_tmp;
 
 
         //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -42,28 +42,68 @@ namespace FGAE
 
             if (hit_Avoid.collider != null)
                 radius = hit_Avoid.collider.GetComponent<CircleCollider2D>().radius *1.3f;
+            if (hit.collider != null)
+                radius = hit.collider.GetComponent<CircleCollider2D>().radius * 1.3f;
+
             Vector3 ss_position = GetSpaceShip().transform.position;
 
-            if (hit.collider == null && hit_Avoid.collider != null)
+            if (hit.collider != null)
             {
                 if (!avoiding)
                 {
                     avoiding = true;
-                    Debug.DrawRay(ss_position, GetSpaceShip().transform.TransformDirection(Vector3.right) * 3.5f, Color.yellow);
+                    //Debug.DrawRay(ss_position, GetSpaceShip().transform.TransformDirection(Vector3.right) * 3.5f, Color.yellow);
+
                     Vector3 pos1 = Vector3.zero;
                     Vector3 pos2 = Vector3.zero;
 
-                    if ((ss_position.x > hit_Avoid.collider.transform.position.x && ss_position.y > hit_Avoid.collider.transform.position.y) || (ss_position.x < hit_Avoid.collider.transform.position.x && ss_position.y < hit_Avoid.collider.transform.position.y))
+                    float degre_b = Mathf.Atan2((target.transform.position - GetSpaceShip().transform.position).y, (target.transform.position - GetSpaceShip().transform.position).x) * Mathf.Rad2Deg;
+                    if (degre_b < 0)
                     {
-                        pos1 = new Vector3(-radius, radius, 0);
-                        pos2 = new Vector3(radius, -radius, 0);
+                        degre_b = 360 + degre_b;
                     }
-                    else
+                    RaycastHit2D avoid_r;
+                    RaycastHit2D avoid_l;
+                    float degre_r = 5;
+                    float degre_l = 5;
+                    bool out_b = false;
+                    while (!out_b)
                     {
-                        pos1 = new Vector3(radius, radius, 0);
-                        pos2 = new Vector3(-radius, -radius, 0);
+                        avoid_r = Physics2D.Raycast(GetSpaceShip().transform.position, DegreeToVector2(degre_b + degre_r), hit.distance + radius, LayerMask.GetMask("Asteroid"));
+
+                        if (avoid_r.collider == null)
+                        {
+                            out_b = true;
+                        }
+                        else
+                        {
+                            pos1 = avoid_r.point;
+                            degre_r += 5;
+                            Debug.DrawRay(GetSpaceShip().transform.position, (pos1 - GetSpaceShip().transform.position), Color.blue, 2);
+                        }
+
                     }
-                    if (Vector3.Distance(ss_position, pos1) > Vector3.Distance(ss_position, pos2))
+                    out_b = false;
+                    while (!out_b)
+                    {
+                        avoid_l = Physics2D.Raycast(GetSpaceShip().transform.position, DegreeToVector2(degre_b - degre_l), hit.distance + radius, LayerMask.GetMask("Asteroid"));
+
+                        if (avoid_l.collider == null)
+                        {
+                            out_b = true;
+                        }
+                        else
+                        {
+                            pos2 = avoid_l.point;
+                            degre_l += 5;
+                            Debug.DrawRay(GetSpaceShip().transform.position, (pos2 - GetSpaceShip().transform.position), Color.blue, 2);
+                        }
+                    }
+                    pos1 = (Vector3) DegreeToVector2(degre_b + degre_r + 5).normalized * (hit.distance + (radius / 2)) + ss_position;
+                    pos2 = (Vector3) DegreeToVector2(degre_b - degre_l - 5).normalized * (hit.distance + (radius / 2)) + ss_position;
+
+                    if (Vector3.Distance(ss_position, pos1) + Vector3.Distance(pos1, (Vector3)GetCharacterControl(animator).spaceShip_FGAE.GetComponent<Rigidbody2D>().velocity + ss_position) * 30 
+                        > Vector3.Distance(ss_position, pos2) + Vector3.Distance(pos2, (Vector3)GetCharacterControl(animator).spaceShip_FGAE.GetComponent<Rigidbody2D>().velocity + ss_position) * 30)
                     {
                         avoinding_pos = pos2;
                     }
@@ -71,77 +111,44 @@ namespace FGAE
                     {
                         avoinding_pos = pos1;
                     }
-                    
-                }
-                if (Vector3.Distance(ss_position, new Vector3(hit_Avoid.collider.transform.position.x + avoinding_pos.x, (hit_Avoid.collider.transform.position.y + avoinding_pos.y), 0)) > 0.5f)
-                {
-                    var angle_ = Mathf.Atan2((hit_Avoid.collider.transform.position.y + avoinding_pos.y) - ss_position.y, (hit_Avoid.collider.transform.position.x + avoinding_pos.x) - ss_position.x);
-                    SetOrient(angle_ * Mathf.Rad2Deg);
-                }
-                else
-                {
-                    var angle = Mathf.Atan2(target.transform.position.y - ss_position.y, target.transform.position.x - ss_position.x);
-                    SetOrient(angle * Mathf.Rad2Deg);
+                    Debug.DrawRay(GetSpaceShip().transform.position, (avoinding_pos - GetSpaceShip().transform.position), Color.red, 2);
                 }
 
-                /*var angle = Mathf.Atan2((hit_Avoid.collider.transform.position.y + radius) - ss_position.y, (hit_Avoid.collider.transform.position.x + radius) - ss_position.x);
-                SetOrient(angle * Mathf.Rad2Deg);*/
-            }
-            else if (hit.collider != null && hit_Avoid.collider != null)
-            {
-                if (!avoiding)
-                {
-                    avoiding = true;
-                    Debug.DrawRay(ss_position, GetSpaceShip().transform.TransformDirection(Vector3.right) * 3.5f, Color.yellow);
-
-                    Vector3 pos1 = Vector3.zero;
-                    Vector3 pos2 = Vector3.zero;
-
-                    if ((ss_position.x > hit.collider.transform.position.x && ss_position.y > hit.collider.transform.position.y) || (ss_position.x < hit.collider.transform.position.x && ss_position.y < hit.collider.transform.position.y))
-                    {
-                        pos1 = new Vector3(-radius, radius, 0);
-                        pos2 = new Vector3(radius, -radius, 0);
-                        Debug.Log("DROITE-HAUT + GAUCHE + HAUT");
-                    }
-                    else
-                    {
-                        pos1 = new Vector3(radius, radius, 0);
-                        pos2 = new Vector3(-radius, -radius, 0);
-                    }
-                    if (Vector3.Distance(ss_position, pos1) > Vector3.Distance(ss_position, pos2))
-                    {
-                        avoinding_pos = pos2;
-                    }
-                    else
-                    {
-                        avoinding_pos = pos1;
-                    }
-                }
-
-                if (Vector3.Distance(ss_position, new Vector3(hit_Avoid.collider.transform.position.x + avoinding_pos.x, (hit_Avoid.collider.transform.position.y + avoinding_pos.y), 0)) > 0.5f)
-                {
-                    var angle = Mathf.Atan2((hit.collider.transform.position.y + avoinding_pos.y) - ss_position.y, (hit.collider.transform.position.x + avoinding_pos.x) - ss_position.x);
-                    SetOrient(angle * Mathf.Rad2Deg);
-                }
-                else
-                {
-                    var angle = Mathf.Atan2(target.transform.position.y - ss_position.y, target.transform.position.x - ss_position.x);
-                    SetOrient(angle * Mathf.Rad2Deg);
-                }
-
-                //
-                /*Debug.DrawRay(ss_position, GetSpaceShip().transform.TransformDirection(Vector3.right) * 3.5f, Color.red);
-                var angle = Mathf.Atan2((hit.collider.transform.position.y + radius) - ss_position.y, (hit.collider.transform.position.x + radius) - ss_position.x);
-                SetOrient(angle * Mathf.Rad2Deg);*/
-            }
-            else if (hit_Avoid.collider == null)
-            {
-                var angle = Mathf.Atan2(target.transform.position.y - ss_position.y, target.transform.position.x - ss_position.x);
+                var angle = Mathf.Atan2(avoinding_pos.y - ss_position.y, avoinding_pos.x - ss_position.x);
                 SetOrient(angle * Mathf.Rad2Deg);
-                avoiding = false;
+
+                //Debug.DrawRay(GetSpaceShip().transform.position, (avoinding_pos - GetSpaceShip().transform.position), Color.red);
+
             }
+            else
+            {
+                if (avoiding)
+                {
+                    if (Vector3.Distance(avoinding_pos, ss_position) < 1f)
+                    {
+                        avoiding = false;
+                    }
+                    else
+                    {
+                        var angle = Mathf.Atan2(avoinding_pos.y - ss_position.y, avoinding_pos.x - ss_position.x);
+                        SetOrient(angle * Mathf.Rad2Deg);
+                        //Debug.DrawRay(GetSpaceShip().transform.position, (avoinding_pos - GetSpaceShip().transform.position), Color.red);
+                    }
+
+
+                }
+                else
+                {
+                    var angle = Mathf.Atan2(target.transform.position.y - ss_position.y, target.transform.position.x - ss_position.x);
+                    SetOrient(angle * Mathf.Rad2Deg);
+                }
+            }
+
+            
+
 
             Debug.DrawRay(ss_position, (target.transform.position - GetSpaceShip().transform.position), Color.green);
+            Debug.DrawRay(ss_position, GetCharacterControl(animator).spaceShip_FGAE.GetComponent<Rigidbody2D>().velocity * 1, Color.black);
 
 
             if (GetData().WayPoints[count].GetComponent<WayPoint>().Owner == GetSpaceShip().Owner)
@@ -159,6 +166,16 @@ namespace FGAE
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
 
+        }
+
+        public static Vector2 RadianToVector2(float radian)
+        {
+            return new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));
+        }
+
+        public static Vector2 DegreeToVector2(float degree)
+        {
+            return RadianToVector2(degree * Mathf.Deg2Rad);
         }
     }
 }
