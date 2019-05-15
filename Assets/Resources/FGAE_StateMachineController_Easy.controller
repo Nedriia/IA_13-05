@@ -35,11 +35,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterControl: {fileID: 0}
-  avoidance: 0
   count: 0
   targetConfirmed: 0
   target: {fileID: 0}
   targetOrient: 0
+  avoiding: 0
+  avoinding_pos: {x: 0, y: 0, z: 0}
+  dist_avoiding_max: 0
+  dist_avoiding_tmp: 0
 --- !u!1102 &1102186546594261312
 AnimatorState:
   serializedVersion: 5
@@ -104,17 +107,17 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102186546594261312}
-    m_Position: {x: 264, y: 120, z: 0}
+    m_Position: {x: 280, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102577741006756582}
-    m_Position: {x: 264, y: 180, z: 0}
+    m_Position: {x: 280, y: 170, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
-  m_EntryPosition: {x: 50, y: 120, z: 0}
+  m_EntryPosition: {x: 60, y: 140, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 1102186546594261312}
