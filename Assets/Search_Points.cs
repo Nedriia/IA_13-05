@@ -125,13 +125,6 @@ namespace FGAE
                             avoinding_pos = pos1;
                         }
 
-                        forward_avoiding_pos = Vector2.Perpendicular(hit.collider.transform.position - avoinding_pos);
-                        Debug.Log(forward_avoiding_pos);
-                        if (Vector3.Dot(forward_avoiding_pos, ss_position) < -1)
-                        {
-                            forward_avoiding_pos *= -1;
-                        }
-
                         Debug.DrawRay(GetSpaceShip().transform.position, (avoinding_pos - GetSpaceShip().transform.position), Color.red, 2);
                     }
                     else
@@ -155,7 +148,6 @@ namespace FGAE
                 if (avoiding)
                 {
                     if (Vector3.Distance(avoinding_pos, ss_position) < 1f)
-                    //if (Vector3.Dot(forward_avoiding_pos, ss_position - avoinding_pos) < 0)
                     {
                         avoiding = false;
                         Debug.Log("NOW");
