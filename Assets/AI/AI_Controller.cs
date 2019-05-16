@@ -14,6 +14,16 @@ namespace FGAE
         public float targetOrient;
         public bool shoot;
 
+        public WayPoint target;
+        public Vector3 ss_target;
+        public Vector3 avoinding_pos;
+
+        public int dif_score;
+        public float view_field;
+        public float attack_mode_time;
+        public float distance_view_field;
+
+
         private void Start()
         {
             if(GetComponent<Animator>() == null)

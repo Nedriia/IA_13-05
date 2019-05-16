@@ -3799,6 +3799,13 @@ MonoBehaviour:
   thrust: 0
   targetOrient: 0
   shoot: 0
+  target: {fileID: 0}
+  ss_target: {x: 0, y: 0, z: 0}
+  avoinding_pos: {x: 0, y: 0, z: 0}
+  dif_score: 5
+  view_field: 90
+  attack_mode_time: 5
+  distance_view_field: 5
 --- !u!1001 &1943483748
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3927,6 +3934,13 @@ MonoBehaviour:
   thrust: 0
   targetOrient: 0
   shoot: 0
+  target: {fileID: 0}
+  ss_target: {x: 0, y: 0, z: 0}
+  avoinding_pos: {x: 0, y: 0, z: 0}
+  dif_score: 5
+  view_field: 90
+  attack_mode_time: 5
+  distance_view_field: 5
 --- !u!1001 &2058461132
 PrefabInstance:
   m_ObjectHideFlags: 0

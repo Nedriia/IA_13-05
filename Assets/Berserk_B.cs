@@ -4,21 +4,17 @@ using UnityEngine;
 
 namespace FGAE
 {
-    public class attack_B : FGAE_CharacterStateBase
+    public class Berserk_B : FGAE_CharacterStateBase
     {
-
         public SpaceShip ss2;
         public bool avoiding;
         public Vector3 avoinding_pos;
         public float delay_shot = 0.5f;
         public float delay_shot_tmp;
 
-        public float timer_attack_tmp;
-
         //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            timer_attack_tmp = 0;
             GetCharacterControl(animator);
             string ss_name = "";
             if (GetSpaceShip().name == "SpaceShip2")
@@ -41,7 +37,7 @@ namespace FGAE
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             SetThrust(1);
-            timer_attack_tmp += Time.deltaTime;
+
             if (delay_shot_tmp > 0)
             {
                 delay_shot_tmp -= Time.deltaTime;
@@ -66,7 +62,7 @@ namespace FGAE
                     float time_max = 2;
                     while (time_tmp < time_max)
                     {
-                        // Debug.Log(((GetSpaceShip().transform.right * 5 * time_tmp) + GetSpaceShip().transform.position)  + " // " + (target + (Vector3)ss2.GetComponent<Rigidbody2D>().velocity) * time_tmp);
+                       // Debug.Log(((GetSpaceShip().transform.right * 5 * time_tmp) + GetSpaceShip().transform.position)  + " // " + (target + (Vector3)ss2.GetComponent<Rigidbody2D>().velocity) * time_tmp);
                         if (Vector2.Distance(((GetSpaceShip().transform.right * 5 * time_tmp) + GetSpaceShip().transform.position), ((Vector2)characterControl.ss_target + (ss2.GetComponent<Rigidbody2D>().velocity * time_tmp))) < 0.3f)
                         {
                             if (GetSpaceShip().Energy >= 0.5f && !ss2.IsHit() && delay_shot_tmp <= 0)
@@ -76,8 +72,7 @@ namespace FGAE
                                 Debug.Log(((GetSpaceShip().transform.right * 5 * time_tmp) + GetSpaceShip().transform.position) + "////" + ((Vector2)characterControl.ss_target + (ss2.GetComponent<Rigidbody2D>().velocity * time_tmp)));
                                 Debug.Log(time_tmp);
                                 time_tmp = time_max;
-                            }
-                            else if (!ss2.IsHit() && delay_shot_tmp <= 0 && Vector2.Distance(((GetSpaceShip().transform.right * 5 * time_tmp) + GetSpaceShip().transform.position), ((Vector2)characterControl.ss_target + (ss2.GetComponent<Rigidbody2D>().velocity * time_tmp))) < 0.1f)
+                            }else if(!ss2.IsHit() && delay_shot_tmp <= 0 && Vector2.Distance(((GetSpaceShip().transform.right * 5 * time_tmp) + GetSpaceShip().transform.position), ((Vector2)characterControl.ss_target + (ss2.GetComponent<Rigidbody2D>().velocity * time_tmp))) < 0.1f)
                             {
                                 SetShot(true);
                                 delay_shot_tmp = delay_shot;
@@ -94,7 +89,7 @@ namespace FGAE
             float radius = 0;
 
             if (hit.collider != null)
-                radius = hit.collider.GetComponent<CircleCollider2D>().radius;
+                radius = hit.collider.GetComponent<CircleCollider2D>().radius;  
 
             Vector3 ss_position = GetSpaceShip().transform.position;
 
@@ -136,17 +131,9 @@ namespace FGAE
                 index_player = 1;
                 index_player2 = 0;
             }
-            if (GameManager.Instance.GetScoreForPlayer(index_player) - GameManager.Instance.GetScoreForPlayer(index_player2) > characterControl.dif_score)
+            if (GameManager.Instance.GetScoreForPlayer(index_player) - GameManager.Instance.GetScoreForPlayer(index_player2) < characterControl.dif_score)
             {
-                animator.SetBool("berserk_mode", true);
-                animator.SetBool("attack_mode", false);
-            }
-
-            float angle_ss2 = Vector3.Angle(ss2.transform.position - GetSpaceShip().transform.position, GetSpaceShip().transform.right);
-
-            if (timer_attack_tmp >= characterControl.attack_mode_time)
-            {
-                animator.SetBool("attack_mode", false);
+                animator.SetBool("berserk_mode", false);
             }
         }
 
@@ -155,6 +142,5 @@ namespace FGAE
         {
 
         }
-
     }
 }
