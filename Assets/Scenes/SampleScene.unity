@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1047,6 +1047,16 @@ PrefabInstance:
         type: 3}
       propertyPath: rotationSpeed
       value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 617285828773621078, guid: 217031d98ab90794ab255132858408bf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6535528609409417349, guid: 217031d98ab90794ab255132858408bf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 217031d98ab90794ab255132858408bf, type: 3}
@@ -3922,14 +3932,20 @@ MonoBehaviour:
   thrust: 0
   targetOrient: 0
   shoot: 0
+  mine: 0
   target: {fileID: 0}
   ss_target: {x: 0, y: 0, z: 0}
   avoinding_pos: {x: 0, y: 0, z: 0}
   dif_score: 5
   view_field: 90
   attack_mode_time: 5
-  distance_view_field: 5
+  distance_view_field: 3
   time_recalc_escapePoint: 1
+  view_field_mine: 150
+  dist_min_mine: 5
+  dist_max_mine: 15
+  energy_min_mine: 0.3
+  delay_shot: 0.5
 --- !u!1001 &2058461132
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4174,12 +4190,12 @@ PrefabInstance:
     - target: {fileID: 1231416908033415982, guid: 46366af533aa4a149b4ed9220dffce99,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.33
+      value: 9.23
       objectReference: {fileID: 0}
     - target: {fileID: 1231416908033415982, guid: 46366af533aa4a149b4ed9220dffce99,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.05
+      value: -1.44
       objectReference: {fileID: 0}
     - target: {fileID: 1231416908033415982, guid: 46366af533aa4a149b4ed9220dffce99,
         type: 3}
@@ -4315,15 +4331,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpaceShip1
       objectReference: {fileID: 0}
+    - target: {fileID: 8544637535006246790, guid: ddec9c444f5700247bafd0707e3dfc93,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8544637535006246791, guid: ddec9c444f5700247bafd0707e3dfc93,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -22.84
+      value: -7.61
       objectReference: {fileID: 0}
     - target: {fileID: 8544637535006246791, guid: ddec9c444f5700247bafd0707e3dfc93,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.83
+      value: 0.46
       objectReference: {fileID: 0}
     - target: {fileID: 8544637535006246791, guid: ddec9c444f5700247bafd0707e3dfc93,
         type: 3}

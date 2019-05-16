@@ -13,16 +13,24 @@ namespace FGAE
         public float thrust;
         public float targetOrient;
         public bool shoot;
+        public bool mine;
 
         public WayPoint target;
         public Vector3 ss_target;
         public Vector3 avoinding_pos;
 
+        //GD values
         public int dif_score;
         public float view_field;
         public float attack_mode_time;
         public float distance_view_field;
         public float time_recalc_escapePoint;
+
+        public float view_field_mine;
+        public float dist_min_mine;
+        public float dist_max_mine;
+        public float energy_min_mine;
+        public float delay_shot = 0.5f;
 
 
         private void Start()
@@ -40,7 +48,7 @@ namespace FGAE
                 spaceShip_FGAE = spaceship;
             data_FGAE = data;
 
-            return new InputData(thrust, targetOrient, shoot, false);
+            return new InputData(thrust, targetOrient, shoot, mine);
         }
     }
 }

@@ -43,6 +43,11 @@ namespace FGAE
             characterControl.shoot = shoot_;
         }
 
+        public void SetMine(bool mine_)
+        {
+            characterControl.mine = mine_;
+        }
+
         public static Vector2 RadianToVector2(float radian)
         {
             return new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));

@@ -17,6 +17,8 @@ namespace FGAE
         public float angleTest;
         public float test;
 
+        private float delay_shot_tmp;
+
 
         //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -36,12 +38,21 @@ namespace FGAE
                 ss_name = "SpaceShip2";
             }
             ss2 = GameObject.Find(ss_name).GetComponent<SpaceShip>();
+            delay_shot_tmp = characterControl.delay_shot;
         }
 
         //OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            SetThrust(1);                     
+            SetThrust(1);
+            SetMine(false);
+            SetShot(false);
+
+            if (delay_shot_tmp > 0)
+            {
+                delay_shot_tmp -= Time.deltaTime;
+            }
+
             Debug.DrawRay(GetSpaceShip().transform.position, new Vector3(GetSpaceShip().Velocity.x - GetSpaceShip().transform.right.x, GetSpaceShip().Velocity.y - GetSpaceShip().transform.right.y, 0), Color.yellow);
 
             if (!targetConfirmed)
@@ -67,6 +78,17 @@ namespace FGAE
             if ((Vector3.Dot(GetSpaceShip().transform.right, characterControl.target.transform.position - GetSpaceShip().transform.position) > 0))
             {
                 targetConfirmed = false;
+            }
+
+            RaycastHit2D hit_mine = Physics2D.Raycast(GetSpaceShip().transform.position, GetSpaceShip().transform.TransformDirection(Vector3.right), 2, LayerMask.GetMask("Mine"));
+
+            if (hit_mine.collider != null)
+            {
+                if (delay_shot_tmp <= 0)
+                {
+                    SetShot(true);
+                    delay_shot_tmp = characterControl.delay_shot;
+                }
             }
 
             RaycastHit2D hit = Physics2D.Raycast(GetSpaceShip().transform.position, GetSpaceShip().transform.TransformDirection(Vector3.right), 3.5f, LayerMask.GetMask("Asteroid"));
@@ -113,19 +135,29 @@ namespace FGAE
                 targetConfirmed = false;
             }
 
+            float angle_ss2 = Vector3.Angle(ss2.transform.position - GetSpaceShip().transform.position, GetSpaceShip().transform.right);
+
             if (GameManager.Instance.GetScoreForPlayer(get_index_spaceship()) - GameManager.Instance.GetScoreForPlayer(get_enemy_index_spaceship()) > characterControl.dif_score)
             {
                 animator.SetBool("berserk_mode", true);
             }
             else
             {
-                float angle_ss2 = Vector3.Angle(ss2.transform.position - GetSpaceShip().transform.position, GetSpaceShip().transform.right);
-
                 if (angle_ss2 < characterControl.view_field && Vector2.Distance(GetSpaceShip().transform.position, ss2.transform.position) < characterControl.distance_view_field)
                 {
                     animator.SetBool("attack_mode", true);
                 }
             }
+
+            float dist_ = Vector2.Distance(ss2.transform.position, GetSpaceShip().transform.position);
+            if (angle_ss2 > characterControl.view_field_mine &&  dist_ >  characterControl.dist_min_mine && dist_ < characterControl.dist_max_mine && GetSpaceShip().Energy > characterControl.energy_min_mine)
+            {
+                SetMine(true);
+            }
+
+
+
+
 
         }
 

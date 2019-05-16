@@ -83,6 +83,16 @@ namespace FGAE
                 }
             }
 
+            RaycastHit2D hit_mine = Physics2D.Raycast(GetSpaceShip().transform.position, GetSpaceShip().transform.TransformDirection(Vector3.right), 2, LayerMask.GetMask("Mine"));
+
+            if (hit_mine.collider != null)
+            {
+                if (delay_shot_tmp <= 0)
+                {
+                    SetShot(true);
+                    delay_shot_tmp = characterControl.delay_shot;
+                }
+            }
 
             RaycastHit2D hit = Physics2D.Raycast(GetSpaceShip().transform.position, GetSpaceShip().transform.right, 3.5f, LayerMask.GetMask("Asteroid"));
 

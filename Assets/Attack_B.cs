@@ -4,14 +4,13 @@ using UnityEngine;
 
 namespace FGAE
 {
-    public class attack_B : FGAE_CharacterStateBase
+    public class Attack_B : FGAE_CharacterStateBase
     {
 
         public SpaceShip ss2;
         public bool avoiding;
         public Vector3 avoinding_pos;
-        public float delay_shot = 0.5f;
-        public float delay_shot_tmp;
+        private float delay_shot_tmp;
 
         public float timer_attack_tmp;
 
@@ -59,7 +58,7 @@ namespace FGAE
                 if (GetSpaceShip().Energy >= 1 && !ss2.IsHit() && delay_shot_tmp <= 0)
                 {
                     SetShot(true);
-                    delay_shot_tmp = delay_shot;
+                    delay_shot_tmp = characterControl.delay_shot;
                 }
             }
             else
@@ -76,7 +75,7 @@ namespace FGAE
                             if (GetSpaceShip().Energy >= 0.5f && !ss2.IsHit() && delay_shot_tmp <= 0)
                             {
                                 SetShot(true);
-                                delay_shot_tmp = delay_shot;
+                                delay_shot_tmp = characterControl.delay_shot;
                                 Debug.Log(((GetSpaceShip().transform.right * 5 * time_tmp) + GetSpaceShip().transform.position) + "////" + ((Vector2)characterControl.ss_target + (ss2.GetComponent<Rigidbody2D>().velocity * time_tmp)));
                                 Debug.Log(time_tmp);
                                 time_tmp = time_max;
@@ -84,11 +83,22 @@ namespace FGAE
                             else if (!ss2.IsHit() && delay_shot_tmp <= 0 && Vector2.Distance(((GetSpaceShip().transform.right * 5 * time_tmp) + GetSpaceShip().transform.position), ((Vector2)characterControl.ss_target + (ss2.GetComponent<Rigidbody2D>().velocity * time_tmp))) < 0.1f)
                             {
                                 SetShot(true);
-                                delay_shot_tmp = delay_shot;
+                                delay_shot_tmp = characterControl.delay_shot;
                             }
                         }
                         time_tmp += 0.2f;
                     }
+                }
+            }
+
+            RaycastHit2D hit_mine = Physics2D.Raycast(GetSpaceShip().transform.position, GetSpaceShip().transform.TransformDirection(Vector3.right), 2, LayerMask.GetMask("Mine"));
+
+            if (hit_mine.collider != null)
+            {
+                if (delay_shot_tmp <= 0)
+                {
+                    SetShot(true);
+                    delay_shot_tmp = characterControl.delay_shot;
                 }
             }
 
