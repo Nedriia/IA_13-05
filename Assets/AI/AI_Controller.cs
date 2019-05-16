@@ -12,6 +12,7 @@ namespace FGAE
         public GameData data_FGAE;
         public float thrust;
         public float targetOrient;
+        public bool shoot;
 
         private void Start()
         {
@@ -28,7 +29,7 @@ namespace FGAE
                 spaceShip_FGAE = spaceship;
             data_FGAE = data;
 
-            return new InputData(thrust, targetOrient, false, false);
+            return new InputData(thrust, targetOrient, shoot, false);
         }
     }
 }

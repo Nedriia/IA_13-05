@@ -37,6 +37,11 @@ namespace FGAE
             characterControl.targetOrient = orient;
         }
 
+        public void SetShot(bool shoot_)
+        {
+            characterControl.shoot = shoot_;
+        }
+
 
     }
 }
