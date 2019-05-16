@@ -17,6 +17,8 @@ MonoBehaviour:
   ss2: {fileID: 0}
   avoiding: 0
   avoinding_pos: {x: 0, y: 0, z: 0}
+  delay_shot: 0.5
+  delay_shot_tmp: 0
 --- !u!1102 &-1484473969238178
 AnimatorState:
   serializedVersion: 5
@@ -57,7 +59,7 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -90,9 +92,12 @@ MonoBehaviour:
   targetOrient: 0
   avoiding: 0
   avoinding_pos: {x: 0, y: 0, z: 0}
-  forward_avoiding_pos: {x: 0, y: 0, z: 0}
   dist_avoiding_max: 0
   dist_avoiding_tmp: 0
+  dist_detection: 3.4028235e+38
+  targetCheck: {fileID: 0}
+  angleTest: 0
+  test: 0
 --- !u!1102 &1102186546594261312
 AnimatorState:
   serializedVersion: 5
@@ -165,7 +170,7 @@ AnimatorStateMachine:
     m_Position: {x: 360, y: 150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6668233687304238651}
-    m_Position: {x: 420, y: -70, z: 0}
+    m_Position: {x: 580, y: 0, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1320878325822131850}
     m_Position: {x: 220, y: -180, z: 0}

@@ -15,6 +15,11 @@ public struct InputData {
 
 public abstract class BaseSpaceShipController : MonoBehaviour
 {
+    public virtual void Initialize(SpaceShip spaceship, GameData data)
+    {
+
+    }
+
     public virtual InputData UpdateInput(SpaceShip spaceship, GameData data)
     {
         return new InputData(0.0f, 0.0f, false, false);

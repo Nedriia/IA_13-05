@@ -57,8 +57,20 @@ public class GameManager : MonoBehaviour
                 setup.spaceShip.Initialize(setup.controller, i);
             }
             ++i;
-        }        
+        }
     }
+
+    void Start()
+    {
+        foreach (PlayerSetup setup in playerSetups)
+        {
+            if (setup.controller != null)
+            {
+                setup.controller.Initialize(setup.spaceShip, GetGameData());
+            }
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
