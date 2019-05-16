@@ -41,7 +41,11 @@ namespace FGAE
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             SetThrust(1);
-            timer_attack_tmp += Time.deltaTime;
+            if (animator.GetBool("attack_mode"))
+            {
+                timer_attack_tmp += Time.deltaTime;
+            }
+
             if (delay_shot_tmp > 0)
             {
                 delay_shot_tmp -= Time.deltaTime;
@@ -147,6 +151,7 @@ namespace FGAE
             if (timer_attack_tmp >= characterControl.attack_mode_time)
             {
                 animator.SetBool("attack_mode", false);
+                timer_attack_tmp = 0;
             }
         }
 

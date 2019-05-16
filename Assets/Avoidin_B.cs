@@ -7,6 +7,8 @@ namespace FGAE
     public class Avoidin_B : FGAE_CharacterStateBase
     {
 
+        public float time_recalc_escapePoint_tmp;
+
         //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
@@ -20,15 +22,32 @@ namespace FGAE
         //OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            if (time_recalc_escapePoint_tmp < characterControl.time_recalc_escapePoint)
+            {
+                time_recalc_escapePoint_tmp += Time.deltaTime;
+            }
 
             if (Vector3.Distance(characterControl.avoinding_pos, GetSpaceShip().transform.position) < 1f)
             {
-                animator.SetBool("avoiding", false);
+                if (GetSpaceShip().Velocity.magnitude < 0.2f)
+                {
+                    var angle = Mathf.Atan2(characterControl.avoinding_pos.y - GetSpaceShip().transform.position.y, characterControl.avoinding_pos.x - GetSpaceShip().transform.position.x);
+                    SetOrient(angle * Mathf.Rad2Deg);
+                }
+                else
+                {
+                    animator.SetBool("avoiding", false);
+                }
             }
             else
             {
                 var angle = Mathf.Atan2(characterControl.avoinding_pos.y - GetSpaceShip().transform.position.y, characterControl.avoinding_pos.x - GetSpaceShip().transform.position.x);
                 SetOrient(angle * Mathf.Rad2Deg);
+            }
+
+            if (GetSpaceShip().Velocity.magnitude < 0.2f && time_recalc_escapePoint_tmp >= characterControl.time_recalc_escapePoint)
+            {
+                New_Point_Calc(animator);
             }
 
         }
@@ -42,6 +61,8 @@ namespace FGAE
         public void New_Point_Calc(Animator animator)
         {
             RaycastHit2D hit = Physics2D.Raycast(GetSpaceShip().transform.position, GetSpaceShip().transform.TransformDirection(Vector3.right), 3.5f, LayerMask.GetMask("Asteroid"));
+
+            time_recalc_escapePoint_tmp = 0;
 
             float radius = 0;
 
@@ -105,7 +126,6 @@ namespace FGAE
             }
             pos1 = (Vector3)DegreeToVector2(degre_b + degre_r + 5).normalized * (hit.distance + (radius / 2)) + GetSpaceShip().transform.position;
             pos2 = (Vector3)DegreeToVector2(degre_b - degre_l - 5).normalized * (hit.distance + (radius / 2)) + GetSpaceShip().transform.position;
-            Debug.Log(GetSpaceShip().transform.position);
 
             if (Vector3.Distance(GetSpaceShip().transform.position, pos1) + Vector3.Distance(pos1, (Vector3)GetCharacterControl(animator).spaceShip_FGAE.GetComponent<Rigidbody2D>().velocity + GetSpaceShip().transform.position) * 30
                 > Vector3.Distance(GetSpaceShip().transform.position, pos2) + Vector3.Distance(pos2, (Vector3)GetCharacterControl(animator).spaceShip_FGAE.GetComponent<Rigidbody2D>().velocity + GetSpaceShip().transform.position) * 30)

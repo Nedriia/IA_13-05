@@ -3791,21 +3791,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1659413844}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e1e31ca36daa634d9ead967f892dbe5, type: 3}
+  m_Script: {fileID: 11500000, guid: 78aa498dc9640c14fa128b7412f7dcc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 3.4028235e+38
-  spaceShip_FGAE: {fileID: 0}
-  thrust: 0
-  targetOrient: 0
-  shoot: 0
-  target: {fileID: 0}
-  ss_target: {x: 0, y: 0, z: 0}
-  avoinding_pos: {x: 0, y: 0, z: 0}
-  dif_score: 5
-  view_field: 90
-  attack_mode_time: 5
-  distance_view_field: 5
 --- !u!1001 &1943483748
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3941,6 +3929,7 @@ MonoBehaviour:
   view_field: 90
   attack_mode_time: 5
   distance_view_field: 5
+  time_recalc_escapePoint: 1
 --- !u!1001 &2058461132
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4329,12 +4318,12 @@ PrefabInstance:
     - target: {fileID: 8544637535006246791, guid: ddec9c444f5700247bafd0707e3dfc93,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.18
+      value: -22.84
       objectReference: {fileID: 0}
     - target: {fileID: 8544637535006246791, guid: ddec9c444f5700247bafd0707e3dfc93,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.06
+      value: 3.83
       objectReference: {fileID: 0}
     - target: {fileID: 8544637535006246791, guid: ddec9c444f5700247bafd0707e3dfc93,
         type: 3}

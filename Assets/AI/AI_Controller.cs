@@ -22,6 +22,7 @@ namespace FGAE
         public float view_field;
         public float attack_mode_time;
         public float distance_view_field;
+        public float time_recalc_escapePoint;
 
 
         private void Start()

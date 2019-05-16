@@ -117,12 +117,14 @@ namespace FGAE
             {
                 animator.SetBool("berserk_mode", true);
             }
-
-            float angle_ss2 = Vector3.Angle(ss2.transform.position - GetSpaceShip().transform.position, GetSpaceShip().transform.right);
-
-            if (angle_ss2 < characterControl.view_field && Vector2.Distance(GetSpaceShip().transform.position, ss2.transform.position) < characterControl.distance_view_field)
+            else
             {
-                animator.SetBool("attack_mode" , true);
+                float angle_ss2 = Vector3.Angle(ss2.transform.position - GetSpaceShip().transform.position, GetSpaceShip().transform.right);
+
+                if (angle_ss2 < characterControl.view_field && Vector2.Distance(GetSpaceShip().transform.position, ss2.transform.position) < characterControl.distance_view_field)
+                {
+                    animator.SetBool("attack_mode", true);
+                }
             }
 
         }
