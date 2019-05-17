@@ -29,12 +29,6 @@ namespace FGAE
                 ss_name = "SpaceShip2";
             }
             ss2 = GameObject.Find(ss_name).GetComponent<SpaceShip>();
-
-            if (ss2.name == "SpaceShip2")
-            {
-                //animator.SetBool("go_to_point", true);
-                animator.SetBool("berserk_mode", false);
-            }
         }
 
         //OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
