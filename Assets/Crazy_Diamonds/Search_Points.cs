@@ -111,7 +111,7 @@ namespace FGAE
 
             //If the AI score is too different then he enter in berserk mode, he track the player whenever the enemy is
             float angle_ss2 = Vector3.Angle(ss2.transform.position - GetSpaceShip().transform.position, GetSpaceShip().transform.right);
-            if (GameManager.Instance.GetScoreForPlayer(get_index_spaceship()) - GameManager.Instance.GetScoreForPlayer(get_enemy_index_spaceship()) > characterControl.dif_score)
+            if (Mathf.Abs(GameManager.Instance.GetScoreForPlayer(get_index_spaceship()) - GameManager.Instance.GetScoreForPlayer(get_enemy_index_spaceship())) > characterControl.dif_score)
                 animator.SetBool("berserk_mode", true);
             else
                 if (angle_ss2 < characterControl.view_field && Vector2.Distance(GetSpaceShip().Position, ss2.transform.position) < characterControl.distance_view_field)

@@ -359,24 +359,24 @@ AnimatorController:
   m_Name: FGAE_StateMachineController_Easy
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: berserk_mode
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
   - m_Name: avoiding
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
+  - m_Name: berserk_mode
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   - m_Name: attack_mode
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -409,7 +409,6 @@ MonoBehaviour:
   dist_detection: 3.4028235e+38
   targetCheck: {fileID: 0}
   angleTest: 0
-  test: 0
   threeshold_distancePoint: 8
 --- !u!114 &605028770090271947
 MonoBehaviour:

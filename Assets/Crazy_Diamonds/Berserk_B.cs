@@ -145,7 +145,7 @@ namespace FGAE
                 index_player = 1;
                 index_player2 = 0;
             }
-            if (GameManager.Instance.GetScoreForPlayer(index_player) - GameManager.Instance.GetScoreForPlayer(index_player2) < characterControl.dif_score)
+            if (Mathf.Abs(GameManager.Instance.GetScoreForPlayer(index_player) - GameManager.Instance.GetScoreForPlayer(index_player2)) < characterControl.dif_score)
             {
                 animator.SetBool("berserk_mode", false);
             }

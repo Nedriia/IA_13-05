@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5201597632219598223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5201597632219598222}
+  - component: {fileID: 5201597632219598221}
+  m_Layer: 0
+  m_Name: P1
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5201597632219598222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5201597632219598223}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5201597632219598221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5201597632219598223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e1e31ca36daa634d9ead967f892dbe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spaceShip_FGAE: {fileID: 0}
+  thrust: 0
+  targetOrient: 0
+  shoot: 0
+  mine: 0
+  target: {fileID: 0}
+  ss_target: {x: 0, y: 0, z: 0}
+  avoinding_pos: {x: 0, y: 0, z: 0}
+  dif_score: 5
+  view_field: 90
+  attack_mode_time: 3
+  distance_view_field: 3
+  time_recalc_escapePoint: 1
+  view_field_mine: 150
+  dist_min_mine: 5
+  dist_max_mine: 15
+  energy_min_mine: 0.3
+  delay_shot: 0.5
