@@ -83,6 +83,12 @@ namespace FGAE
             }
         }
 
+        public SpaceShip get_EnemySpaceShip()
+        {
+            return GameManager.Instance.GetGameData().GetSpaceShipForOwner(get_enemy_index_spaceship());
+        }
+
+
 
     }
 }
