@@ -294,8 +294,6 @@ MonoBehaviour:
   ss2: {fileID: 0}
   avoiding: 0
   avoinding_pos: {x: 0, y: 0, z: 0}
-  delay_shot: 0.5
-  delay_shot_tmp: 0
   timer_attack_tmp: 0
 --- !u!1101 &-64553139348357851
 AnimatorStateTransition:
@@ -412,6 +410,7 @@ MonoBehaviour:
   targetCheck: {fileID: 0}
   angleTest: 0
   test: 0
+  threeshold_distancePoint: 8
 --- !u!114 &605028770090271947
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -590,8 +589,6 @@ MonoBehaviour:
   ss2: {fileID: 0}
   avoiding: 0
   avoinding_pos: {x: 0, y: 0, z: 0}
-  delay_shot: 0.5
-  delay_shot_tmp: 0
   timer_attack_tmp: 0
 --- !u!1102 &6668233687304238651
 AnimatorState:

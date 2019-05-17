@@ -18,6 +18,7 @@ namespace FGAE
         public float test;
 
         private float delay_shot_tmp;
+        public float threeshold_distancePoint;
 
 
         //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -63,22 +64,32 @@ namespace FGAE
                 {
                     float distance = Vector3.Distance(GetSpaceShip().transform.position, point.transform.position);
                     angleTest = Vector3.Angle(point.transform.position - GetSpaceShip().transform.position, GetSpaceShip().transform.right);
-                    if (distance < dist_detection && (Vector3.Dot(GetSpaceShip().transform.right, point.transform.position - GetSpaceShip().transform.position) > 0) &&  point.Owner != GetSpaceShip().Owner && angleTest < 60 || angleTest <-60)
+                    if (distance < dist_detection && distance < threeshold_distancePoint && (Vector3.Dot(GetSpaceShip().transform.right, point.transform.position - GetSpaceShip().transform.position) > 0) &&  point.Owner != GetSpaceShip().Owner && angleTest < 80 || angleTest <-80)
                     {
                         targetCheck = point;
                         dist_detection = distance;
                     }
+                    //EASY AI//
+                    /*
+                    else if (distance < dist_detection && distance < threeshold_distancePoint && (Vector3.Dot(GetSpaceShip().transform.right, point.transform.position - GetSpaceShip().transform.position) > 0) && point.Owner != GetSpaceShip().Owner)
+                    {
+                        Debug.Log("no sabe que se");
+                        targetCheck = point;
+                        dist_detection = distance;
+                    }
+                    else if(distance < dist_detection && (Vector3.Dot(GetSpaceShip().transform.right, point.transform.position - GetSpaceShip().transform.position) > 0) && point.Owner != GetSpaceShip().Owner)
+                    {
+                        targetCheck = point;
+                        dist_detection = distance;
+                    }*/
+
                 }
                 characterControl.target = targetCheck;
-
                 targetConfirmed = true;
             }
-            angleTest = Vector3.Angle(characterControl.target.transform.position - GetSpaceShip().transform.position, GetSpaceShip().transform.right);
 
-            if ((Vector3.Dot(GetSpaceShip().transform.right, characterControl.target.transform.position - GetSpaceShip().transform.position) > 0))
-            {
+            if ((Vector3.Dot(GetSpaceShip().transform.right, characterControl.target.transform.position - GetSpaceShip().transform.position) < 0) && !animator.GetBool("avoiding"))
                 targetConfirmed = false;
-            }
 
             RaycastHit2D hit_mine = Physics2D.Raycast(GetSpaceShip().transform.position, GetSpaceShip().transform.TransformDirection(Vector3.right), 2, LayerMask.GetMask("Mine"));
 
@@ -130,10 +141,12 @@ namespace FGAE
                 SetOrient(test * Mathf.Rad2Deg);
             }
 
-            if (characterControl.target.GetComponent<WayPoint>().Owner == GetSpaceShip().Owner)
-            {
+            if (characterControl.target.Owner == GetSpaceShip().Owner)
                 targetConfirmed = false;
-            }
+
+            if (Physics2D.OverlapCircle(characterControl.target.Position, characterControl.target.Radius, LayerMask.GetMask("Player")) && characterControl.target.Owner == GetSpaceShip().Owner)
+                SetMine(true);
+
 
             float angle_ss2 = Vector3.Angle(ss2.transform.position - GetSpaceShip().transform.position, GetSpaceShip().transform.right);
 
@@ -154,12 +167,6 @@ namespace FGAE
             {
                 SetMine(true);
             }
-
-
-
-
-
         }
-
     }
 }

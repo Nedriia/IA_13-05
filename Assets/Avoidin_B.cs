@@ -22,6 +22,7 @@ namespace FGAE
         //OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            
             if (time_recalc_escapePoint_tmp < characterControl.time_recalc_escapePoint)
             {
                 time_recalc_escapePoint_tmp += Time.deltaTime;

@@ -29,7 +29,8 @@ namespace FGAE
 
             if (ss2.name == "SpaceShip2")
             {
-                animator.SetBool("go_to_point", true);
+                //animator.SetBool("go_to_point", true);
+                animator.SetBool("berserk_mode", true);
             }
         }
 
